@@ -1,3 +1,5 @@
+// 在go语言中switch case中间是不需要加break的默认结束直接跳过执行下面的case
+// 如果想让其不跳过执行下面的case可直接用fallthrough即可直接向下执行。
 package main
 
 import "fmt"

@@ -20,7 +20,7 @@ func main() {
 	fmt.Println(sum1(1, 2))
 	fmt.Println(sum1(1, 2, 3))
 	fmt.Println(sum1(1, 2, 3, 4))
-
+	//可以直接在函数里面声明一个函数名然后在后面进行调用
 	sum2 := func(a, b int) int {
 		return a + b
 	}
@@ -49,6 +49,7 @@ func sum(a, b int) (sum int, err error) {
 	return
 }
 
+// 可以传入任意多个参数,获取参数可以直接遍历参数列表即可
 func sum1(params ...int) int {
 	sum := 0
 	for _, i := range params {
@@ -57,6 +58,7 @@ func sum1(params ...int) int {
 	return sum
 }
 
+// 函数作为编程的一等公民也可以作为返回值进行返回
 func colsure() func() int {
 	i := 0
 	return func() int {
@@ -67,10 +69,12 @@ func colsure() func() int {
 
 type Age uint
 
+// 该函数修改的只是拷贝值
 func (age Age) String() {
 	fmt.Println("the age is", age)
 }
 
+// 该函数因为是传的指针所以能够修改函数值
 func (age *Age) Modify() {
 	*age = Age(30)
 }

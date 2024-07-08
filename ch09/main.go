@@ -87,22 +87,25 @@ func race() {
 	wg.Wait()
 }
 
+// 创建一个并发的map结构体
 func syncMap() {
 	syncMap := sync.Map{}
-	syncMap.Store(1, 1)
+	syncMap.Store(1, 1) //放入信息
 	syncMap.Store(1, 2)
-	fmt.Println(syncMap.Load(1))
+	fmt.Println(syncMap.Load(1)) //输出第一map的值
 }
 
+// 相加操作
 func add(i int) {
-	mutex.Lock()
-	defer mutex.Unlock()
-	sum += i
+	mutex.Lock()         //加锁
+	defer mutex.Unlock() //所有操作结束开锁
+	sum += i             //执行相加操作(临界区)
 }
 
+// 读操作
 func readSum() int {
-	mutex.RLock()
-	defer mutex.RUnlock()
-	b := sum
-	return b
+	mutex.RLock()         //加锁
+	defer mutex.RUnlock() //所有操作结束解锁
+	b := sum              //获取sum
+	return b              //返回sum
 }

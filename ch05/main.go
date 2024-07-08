@@ -24,6 +24,7 @@ func main() {
 	sum2 := func(a, b int) int {
 		return a + b
 	}
+	//直接调用之前定义过的sum2的函数
 	fmt.Println(sum2(1, 2))
 
 	cl := colsure()

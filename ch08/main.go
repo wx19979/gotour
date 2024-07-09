@@ -1,4 +1,4 @@
-// 通道的测试代码
+// 通道的测试代码,go语言携程之间的通信是通过通道来进行的
 package main
 
 import (
@@ -43,7 +43,7 @@ func main() {
 	go func() {
 		threeCh <- downloadFile("threeCh")
 	}()
-	//通过select语句实现并发
+	//通过select语句实现多路复用
 	select {
 	case filePath := <-firstCh: //当为第一路径时输出内容
 		fmt.Println(filePath)

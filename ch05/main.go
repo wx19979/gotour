@@ -1,3 +1,5 @@
+// 某一个包中的函数想要是公有函数需要将函数名首字母大写,才可以在不同的包中调用
+// 函数名称首字母是小写的属于私有函数只能在同一个包中调用
 package main
 
 import (
@@ -37,10 +39,11 @@ func main() {
 	age.Modify()
 	age.String()
 
-	sm := Age.String
-	sm(age)
+	sm := Age.String //方法赋值给变量,也就是方法表达式
+	sm(age)          //通过变量,要穿一个接收者进行调用所以要传一个age
 }
 
+// 多值返回函数(并且含有函数返回值命名)
 func sum(a, b int) (sum int, err error) {
 	if a < 0 || b < 0 {
 		return 0, errors.New("a或者b不能是负数")
@@ -50,7 +53,7 @@ func sum(a, b int) (sum int, err error) {
 	return
 }
 
-// 可以传入任意多个参数,获取参数可以直接遍历参数列表即可
+// 可以传入任意多个参数,获取参数可以直接遍历参数列表即可(可变参数函数,类型前面加三个点,其实就是该类型的切片)
 func sum1(params ...int) int {
 	sum := 0
 	for _, i := range params {
@@ -68,14 +71,17 @@ func colsure() func() int {
 	}
 }
 
+//函数与方法的区别:方法必须要有一个接收者,这个接收者是一个类型,这样方法就和这个类型绑定在一起,称为这个类型的方法
+//函数属于一个包,而方法是属于一个类型
+
 type Age uint
 
-// 该函数修改的只是拷贝值
+// 该方法是属于Age这一类型的方法
 func (age Age) String() {
 	fmt.Println("the age is", age)
 }
 
-// 该函数因为是传的指针所以能够修改函数值
+// 方法也可以是指针类型
 func (age *Age) Modify() {
 	*age = Age(30)
 }

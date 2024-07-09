@@ -1,3 +1,4 @@
+// 接口是和调用方法的一种约定,它是一个高度抽象的类型,不用和具体实现细节绑定在一起
 package main
 
 import (
@@ -25,12 +26,12 @@ func main() {
 	//创建一个stringer的对象
 	var s fmt.Stringer
 	s = p1
-	p2 := s.(*person) //将该对象强制转换为字符串
+	p2 := s.(*person) //类型断言,如果是一个person指针直接转换为指针类型,不会异常,否则抛出异常
 	fmt.Println(p2)
-	a, ok := s.(address) //获取s中的地址这一项
-	if ok {
+	a, ok := s.(address) //类型断言的多值返回情况
+	if ok {              //这个属于是断言成功
 		fmt.Println(a)
-	} else {
+	} else { //否则断言失败
 		fmt.Println("s不是一个address")
 	}
 
@@ -47,12 +48,12 @@ type person struct {
 	address //套用地址的结构体
 }
 
-// 用于通过名字构建人对象的函数
+// 用于通过名字构建人对象的函数(工厂函数)
 func NewPerson(name string) *person {
 	return &person{name: name}
 }
 
-// 将人这个对象的名字和年龄输出的函数
+// 将人这个对象的名字和年龄输出的函数(让person类型实现了string接口中的String方法)
 func (p *person) String() string {
 	return fmt.Sprintf("the name is %s,age is %d", p.name, p.age)
 }
@@ -78,7 +79,7 @@ type address struct {
 	city     string //城市字段
 }
 
-// 输出信息的函数
+// 输出信息的函数(让address类型实现String接口下的String方法)
 func (addr address) String() string {
 	return fmt.Sprintf("the addr is %s%s", addr.province, addr.city)
 }

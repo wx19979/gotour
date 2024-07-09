@@ -5,6 +5,7 @@ package main
 import "fmt"
 
 func main() {
+	//if else的示例
 	if i := 6; i > 10 {
 		fmt.Println("i>10")
 	} else if i > 5 && i <= 10 {
@@ -12,7 +13,7 @@ func main() {
 	} else {
 		fmt.Println("i<=5")
 	}
-
+	//switch的示例
 	switch i := 6; {
 	case i > 10:
 		fmt.Println("i>10")
@@ -21,7 +22,7 @@ func main() {
 	default:
 		fmt.Println("i<=5")
 	}
-
+	//switch的示例，后面的j就是case可能等于的变量
 	switch j := 1; j {
 	case 1:
 		fallthrough
@@ -30,14 +31,14 @@ func main() {
 	default:
 		fmt.Println("没有匹配")
 	}
-
+	//布尔值的switch示例
 	switch 2 > 1 {
 	case true:
 		fmt.Println("2>1")
 	case false:
 		fmt.Println("2<=1")
 	}
-
+	//循环的示例 continue跳出当前次数的循环,break结束整体的循环
 	sum := 0
 	i := 1
 	for {

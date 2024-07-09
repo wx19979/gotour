@@ -1,3 +1,4 @@
+// 错误和异常
 package main
 
 import (
@@ -17,6 +18,11 @@ func main() {
 
 	sum, err := add(-1, 2) //调用相加函数
 	var cm *commonError
+	if cm, ok := err.(*commonError); ok { //错误类型断言
+		fmt.Println("错误代码为:", cm.errorCode, "，错误信息为：", cm.errorMsg)
+	} else { //否则输出正确结果
+		fmt.Println(sum)
+	}
 	if errors.As(err, &cm) { //判断当前错误如果符合该条件输出错误结果
 		fmt.Println("错误代码为:", cm.errorCode, "，错误信息为：", cm.errorMsg)
 	} else { //否则输出正确结果
@@ -24,14 +30,14 @@ func main() {
 	}
 	//创建一个错误的对象
 	e := errors.New("原始错误e")
-	w := fmt.Errorf("Wrap了一个错误:%w", e)
+	w := fmt.Errorf("Wrap了一个错误:%w", e) //包裹嵌套成新的error对象错误信息(error.Unwrap解开嵌套)
 	fmt.Println(w)
 	//输出错误信息
 	fmt.Println(errors.Unwrap(w))
 	fmt.Println(errors.Is(w, e))
 	//调用defer函数
 	moreDefer()
-	// 定义一个匿名函数直接调用
+	// go语言中可以通过内置的recover函数恢复panic异常
 	defer func() {
 		if p := recover(); p != nil {
 			fmt.Println(p)
@@ -60,7 +66,8 @@ func connectMySQL(ip, username, password string) {
 	//省略其他代码
 }
 
-// defer测试函数
+// defer测试函数(defer函数保证文件关闭后一定会被执行,不管自定义的函数出现异常还是报错)
+// 一个函数中可以有多个defer语句,多个defer语句顺序按照后进先出的顺序执行
 func moreDefer() {
 	defer fmt.Println("First defer")
 	defer fmt.Println("Second defer")

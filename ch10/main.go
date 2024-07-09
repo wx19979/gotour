@@ -1,3 +1,7 @@
+// Context用于跟踪每一个协程的状态,能更好的控制协程
+// Context是一个接口,具有手动、定时、超时发出取消信号、传值信号等功能,主要用于控制多个协程之间的协作,尤其是取消操作
+// Context共有4个函数(1)Deadline获取设置的截止时间(2)Done返回一个只读的channel,类型为struct{}(3)Err返回取消错误原因
+// (4)Value获取Context上绑定的值,是一个键值对
 package main
 
 import (
@@ -8,10 +12,10 @@ import (
 )
 
 func main() {
-	//创建勇于进行并发等待对象
+	//创建用于进行并发等待对象
 	var wg sync.WaitGroup
 	wg.Add(4) //初始化等待组对象
-	//创建一个ctx对象
+	//创建一个ctx对象 context.Background()用于创建一个空的context对象作为整个context的根节点
 	ctx, stop := context.WithCancel(context.Background())
 	// 开启三个协程调用监控狗的函数
 	go func() {
@@ -36,7 +40,7 @@ func main() {
 	}()
 
 	time.Sleep(5 * time.Second) //先让监控狗监控5秒
-	stop()                      //发停止指令
+	stop()                      //发停止指令,该函数属于context的内部函数用于发送结束的这一信息
 	wg.Wait()
 }
 
@@ -45,7 +49,7 @@ func watchDog(ctx context.Context, name string) {
 	//开启for select循环，一直后台监控
 	for {
 		select {
-		case <-ctx.Done(): //当信号量为结束信号量
+		case <-ctx.Done(): //当信号量为结束信号量(对应就是context调用了stop函数)
 			fmt.Println(name, "停止指令已收到，马上停止") //输出信息
 			return                            //直接返回
 		default: //正常情况下输出正在监控信息

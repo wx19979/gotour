@@ -28,6 +28,7 @@ func main() {
 	fmt.Println(wp)
 }
 
+// 传递指针修改的函数
 func modifyAge(age *int) {
 	*age = 20
 }

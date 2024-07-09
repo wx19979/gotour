@@ -5,16 +5,18 @@ import (
 )
 
 func main() {
+	//创建一个人的对象
 	p := person{name: "张三", age: 18}
 	fmt.Printf("main函数：p的内存地址为%p\n", &p)
+	//调用修改函数
 	modifyPerson(&p)
 	fmt.Println("person name:", p.name, ",age:", p.age)
-
+	//创建一个map的通道
 	m := make(map[string]int)
 	m["飞雪无情"] = 18
 	fmt.Println("飞雪无情的年龄为", m["飞雪无情"])
 	fmt.Printf("main函数：m的内存地址为%p\n", m)
-	modifyMap(m)
+	modifyMap(m) //修改map
 	fmt.Println("飞雪无情的年龄为", m["飞雪无情"])
 
 	//类型零值测试
@@ -51,7 +53,8 @@ func modifyMap(p map[string]int) {
 	p["飞雪无情"] = 20
 }
 
+// 人类的结构体
 type person struct {
-	name string
-	age  int
+	name string //人名
+	age  int    //年龄
 }

@@ -47,51 +47,52 @@ func main() {
 
 }
 
-//工序1采购
+// 工序1采购
 func buy(n int) <-chan string {
-	out := make(chan string)
-	go func() {
-		defer close(out)
-		for i := 1; i <= n; i++ {
+	out := make(chan string) //创建输出通道
+	go func() {              //协程执行采购操作
+		defer close(out)          //执行之后关闭通道
+		for i := 1; i <= n; i++ { //将配件放入通道中
 			out <- fmt.Sprint("配件", i)
 		}
 	}()
-	return out
+	return out //返回输出的通道
 }
 
-//工序2组装
+// 工序2组装
 func build(in <-chan string) <-chan string {
-	out := make(chan string)
-	go func() {
-		defer close(out)
-		for c := range in {
+	out := make(chan string) //创建一个输出的通道
+	go func() {              //协程进行组装操作
+		defer close(out)    //所有执行完之后关闭通道
+		for c := range in { //执行组装操作
 			out <- "组装(" + c + ")"
 		}
 	}()
-	return out
+	return out //返回输出通道
 }
 
-//工序3打包
+// 工序3打包
 func pack(in <-chan string) <-chan string {
+	//创建打包的通道
 	out := make(chan string)
-	go func() {
-		defer close(out)
-		for c := range in {
-			out <- "打包(" + c + ")"
+	go func() { //协程执行打包操作
+		defer close(out)    //所有执行完之后关闭通道
+		for c := range in { //循环执行打包操作
+			out <- "打包(" + c + ")" //将打包信息放入通道中
 		}
 	}()
-	return out
+	return out //返回输出的打包通道
 }
 
-//扇入函数（组件）,把多个chanel中的数据发送到一个channel中
+// 扇入函数（组件）,把多个chanel中的数据发送到一个channel中
 func merge(ins ...<-chan string) <-chan string {
-	var wg sync.WaitGroup
-	out := make(chan string)
+	var wg sync.WaitGroup    //创建一个同步等待信号组
+	out := make(chan string) //创建一个输出的通道
 
 	//把一个channel中的数据发送到out中
 	p := func(in <-chan string) {
-		defer wg.Done()
-		for c := range in {
+		defer wg.Done()     //执行所有之后关闭通道
+		for c := range in { //循环输出操作
 			out <- c
 		}
 	}
@@ -112,22 +113,23 @@ func merge(ins ...<-chan string) <-chan string {
 	return out
 }
 
-//洗菜
+// 洗菜
 func washVegetables() <-chan string {
+	//创建一个信息通道
 	vegetables := make(chan string)
-	go func() {
-		time.Sleep(5 * time.Second)
-		vegetables <- "洗好的菜"
+	go func() { //协程进行洗菜操作
+		time.Sleep(5 * time.Second) //每隔5秒执行操作
+		vegetables <- "洗好的菜"        //将信息放入通道中
 	}()
-	return vegetables
+	return vegetables //返回信息
 }
 
-//烧水
+// 烧水
 func boilWater() <-chan string {
-	water := make(chan string)
-	go func() {
-		time.Sleep(5 * time.Second)
-		water <- "烧开的水"
+	water := make(chan string) //创建一个烧水信息的通道
+	go func() {                //协程进行烧水操作
+		time.Sleep(5 * time.Second) //每隔5秒进行操作
+		water <- "烧开的水"             //将信息放入通道中
 	}()
-	return water
+	return water //返回信息
 }

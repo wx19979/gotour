@@ -8,9 +8,9 @@ func main() {
 	s = "张三"               //创建一个字符串
 	fmt.Println(s)         //输出字符串具体内容
 
-	var sp *string   //创建一个字符串的指针
-	sp = new(string) //申请一个字符串内存空间
-	*sp = "飞雪无情"     //设置数据内容
+	var sp *string = nil //创建一个字符串的指针
+	sp = new(string)     //申请一个字符串内存空间
+	*sp = "飞雪无情"         //设置数据内容
 	fmt.Println(*sp)
 
 	pp := NewPerson("飞雪无情", 20)                    //根据构造函数创建一个人的对象

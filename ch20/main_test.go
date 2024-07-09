@@ -28,6 +28,7 @@ func TestFibonacci(t *testing.T) {
 	}
 }
 
+// 用于测试执行速度的函数
 func BenchmarkFibonacci(b *testing.B) {
 	n := 10
 	b.ReportAllocs() //开启内存统计

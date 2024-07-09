@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	i := 10
-	ip := &i
-
+	i := 10  //int类型
+	ip := &i //取地址
+	//将地址转换为float64类型
 	var fp *float64 = (*float64)(unsafe.Pointer(ip))
-	*fp = *fp * 3
+	*fp = *fp * 3 //将该指针对应的数据乘三
 	fmt.Println(i)
 
 	p := new(person)
@@ -22,7 +22,7 @@ func main() {
 	*pAge = 20
 
 	fmt.Println(*p)
-
+	//分别输出测试的值
 	fmt.Println(unsafe.Sizeof(true))
 	fmt.Println(unsafe.Sizeof(int8(0)))
 	fmt.Println(unsafe.Sizeof(int16(10)))
@@ -34,7 +34,8 @@ func main() {
 
 }
 
+// 人这一个结构体
 type person struct {
-	Name string
-	Age  int
+	Name string //名字
+	Age  int    //年龄
 }

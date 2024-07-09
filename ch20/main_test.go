@@ -38,6 +38,7 @@ func BenchmarkFibonacci(b *testing.B) {
 	}
 }
 
+// 用于测试平行执行运行速度
 func BenchmarkFibonacciRunParallel(b *testing.B) {
 	n := 10
 	b.RunParallel(func(pb *testing.PB) {

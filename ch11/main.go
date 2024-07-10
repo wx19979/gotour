@@ -13,20 +13,20 @@ func main() {
 		time.Sleep(8 * time.Second)
 		result <- "服务端结果"
 	}()
-
+	//select timeout模式
 	select {
 	case v := <-result:
 		fmt.Println(v)
 	case <-time.After(5 * time.Second):
 		fmt.Println("网络访问超时了")
 	}
-
+	// Pipline模式即流水线模式
 	coms := buy(100) //采购100套配件
 	//三班人同时组装100部手机
 	phones1 := build(coms)
 	phones2 := build(coms)
 	phones3 := build(coms)
-	//汇聚三个channel成一个
+	//汇聚三个channel成一个,扇入扇出模式
 	phones := merge(phones1, phones2, phones3)
 	packs := pack(phones) //打包它们以便售卖
 
@@ -34,7 +34,7 @@ func main() {
 	for p := range packs {
 		fmt.Println(p)
 	}
-
+	//Futures模式
 	vegetablesCh := washVegetables() //洗菜
 	waterCh := boilWater()           //烧水
 

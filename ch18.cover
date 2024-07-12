@@ -1,8 +1,4 @@
 mode: set
-gotour/ch18/main.go:3.27,4.11 1 1
-gotour/ch18/main.go:7.2,7.12 1 1
-gotour/ch18/main.go:10.2,10.12 1 1
-gotour/ch18/main.go:13.2,13.40 1 1
-gotour/ch18/main.go:4.11,6.3 1 0
-gotour/ch18/main.go:7.12,9.3 1 1
-gotour/ch18/main.go:10.12,12.3 1 1
+gotour/ch18/main.go:16.13,50.2 28 0
+gotour/ch18/main.go:53.26,55.2 1 0
+gotour/ch18/main.go:58.25,60.2 1 0

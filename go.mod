@@ -1,6 +1,6 @@
-module gotour
+module gotour //第一句是该项目的模块名
 
-go 1.18
+go 1.18 //第二句表示要编译该模块至少需要go 1.18版本的SDK
 
 require (
 	github.com/gin-gonic/gin v1.7.0
